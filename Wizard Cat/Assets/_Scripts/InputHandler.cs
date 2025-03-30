@@ -13,6 +13,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private bool shooting;
     [SerializeField] private bool meleeing;
     [SerializeField] private bool dashing;
+    [SerializeField] private bool usingItem;
 
     [HideInInspector] public UnityEvent onShoot;
     [HideInInspector] public UnityEvent onShootStart;
@@ -23,6 +24,9 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public UnityEvent onDash;
     [HideInInspector] public UnityEvent onDashStart;
     [HideInInspector] public UnityEvent onDashEnd;
+    [HideInInspector] public UnityEvent onItem;
+    [HideInInspector] public UnityEvent onItemStart;
+    [HideInInspector] public UnityEvent onItemEnd;
     [HideInInspector] public UnityEvent onInteract;
 
     private void Awake()
@@ -38,6 +42,7 @@ public class InputHandler : MonoBehaviour
         if (shooting) onShoot?.Invoke();
         if (meleeing) onMelee?.Invoke();
         if (dashing) onDash?.Invoke();
+        if (usingItem) onItem?.Invoke();
     }
 
     public void Move(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
@@ -86,6 +91,19 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    public void UseItem(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            onItemStart?.Invoke();
+            usingItem = true;
+        }
+        else if (ctx.canceled)
+        {
+            onItemEnd?.Invoke();
+            usingItem = false;
+        }
+    }
     public void Interact(InputAction.CallbackContext ctx)
     {
         if(ctx.performed) onInteract?.Invoke();
