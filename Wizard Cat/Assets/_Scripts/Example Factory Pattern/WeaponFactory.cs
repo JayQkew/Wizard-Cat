@@ -12,6 +12,8 @@ public abstract class WeaponFactory : ScriptableObject
     public abstract IWeapon CreateWeapon();
 }
 
+// this is a common relation that all the products have
+// in this case it is being a weapon
 public interface IWeapon
 {
     void Attack();

@@ -13,7 +13,7 @@ public class Knight : MonoBehaviour
             _weapon = _weaponFactory.CreateWeapon();
         }
         
-        _weapon.Attack();
+        Attack();
     }
 
     public void Attack() => _weapon?.Attack();
