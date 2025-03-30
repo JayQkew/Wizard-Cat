@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour
     public Vector2 aimInput;
     [SerializeField] private bool shooting;
     [SerializeField] private bool meleeing;
+    [SerializeField] private bool dashing;
 
     [HideInInspector] public UnityEvent onShoot;
     [HideInInspector] public UnityEvent onShootStart;
@@ -36,6 +37,7 @@ public class InputHandler : MonoBehaviour
     {
         if (shooting) onShoot?.Invoke();
         if (meleeing) onMelee?.Invoke();
+        if (dashing) onDash?.Invoke();
     }
 
     public void Move(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
@@ -68,5 +70,24 @@ public class InputHandler : MonoBehaviour
             onMeleeEnd?.Invoke();
             meleeing = false;
         }
+    }
+
+    public void Dash(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            onDashStart?.Invoke();
+            dashing = true;
+        }
+        else if (ctx.canceled)
+        {
+            onDashEnd?.Invoke();
+            dashing = false;
+        }
+    }
+
+    public void Interact(InputAction.CallbackContext ctx)
+    {
+        if(ctx.performed) onInteract?.Invoke();
     }
 }
