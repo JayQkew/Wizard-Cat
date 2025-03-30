@@ -10,6 +10,8 @@ public class InputHandler : MonoBehaviour
 
     public Vector2 moveInput;
     public Vector2 aimInput;
+    [SerializeField] private bool shooting;
+    [SerializeField] private bool meleeing;
 
     [HideInInspector] public UnityEvent onShoot;
     [HideInInspector] public UnityEvent onShootStart;
@@ -21,12 +23,50 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public UnityEvent onDashStart;
     [HideInInspector] public UnityEvent onDashEnd;
     [HideInInspector] public UnityEvent onInteract;
-    
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(this);
-        
+
         playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void Update()
+    {
+        if (shooting) onShoot?.Invoke();
+        if (meleeing) onMelee?.Invoke();
+    }
+
+    public void Move(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
+
+    public void Aim(InputAction.CallbackContext ctx) => aimInput = ctx.ReadValue<Vector2>();
+
+    public void Shoot(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            onShootStart?.Invoke();
+            shooting = true;
+        }
+        else if (ctx.canceled)
+        {
+            onShootEnd?.Invoke();
+            shooting = false;
+        }
+    }
+
+    public void Melee(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            onMeleeStart?.Invoke();
+            meleeing = true;
+        }
+        else if (ctx.canceled)
+        {
+            onMeleeEnd?.Invoke();
+            meleeing = false;
+        }
     }
 }
