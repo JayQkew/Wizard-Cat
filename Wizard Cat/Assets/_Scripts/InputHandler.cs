@@ -5,9 +5,6 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    public static InputHandler Instance { get; private set; }
-    private PlayerInput playerInput;
-
     public Vector2 moveInput;
     public Vector2 aimInput;
     [SerializeField] private bool shooting;
@@ -29,14 +26,6 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public UnityEvent onItemEnd;
     [HideInInspector] public UnityEvent onInteract;
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(this);
-
-        playerInput = GetComponent<PlayerInput>();
-    }
-
     private void Update()
     {
         if (shooting) onShoot?.Invoke();
@@ -47,7 +36,20 @@ public class InputHandler : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
 
-    public void Aim(InputAction.CallbackContext ctx) => aimInput = ctx.ReadValue<Vector2>();
+    public void Aim(InputAction.CallbackContext ctx)
+    {
+        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+        {
+            aimInput = ctx.ReadValue<Vector2>();
+        }
+        else if (Mouse.current != null && Mouse.current.wasUpdatedThisFrame)
+        {
+            Vector2 mousePos = ctx.ReadValue<Vector2>();
+            Vector2 worldPos = Camera.main!.ScreenToWorldPoint(mousePos);
+            Vector2 dir = ((Vector3)worldPos - transform.position).normalized;
+            aimInput = dir;
+        }
+    }
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
@@ -104,8 +106,9 @@ public class InputHandler : MonoBehaviour
             usingItem = false;
         }
     }
+
     public void Interact(InputAction.CallbackContext ctx)
     {
-        if(ctx.performed) onInteract?.Invoke();
+        if (ctx.performed) onInteract?.Invoke();
     }
 }
