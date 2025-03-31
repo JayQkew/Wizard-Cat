@@ -28,6 +28,8 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
+        Aim();
+        
         if (shooting) onShoot?.Invoke();
         if (meleeing) onMelee?.Invoke();
         if (dashing) onDash?.Invoke();
@@ -36,15 +38,15 @@ public class InputHandler : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
 
-    public void Aim(InputAction.CallbackContext ctx)
+    public void Aim()
     {
-        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+        if (Gamepad.current != null)
         {
-            aimInput = ctx.ReadValue<Vector2>();
+            aimInput = Gamepad.current.leftStick.ReadValue();
         }
-        else if (Mouse.current != null && Mouse.current.wasUpdatedThisFrame)
+        else if (Mouse.current != null)
         {
-            Vector2 mousePos = ctx.ReadValue<Vector2>();
+            Vector2 mousePos = Mouse.current.position.ReadValue();
             Vector2 worldPos = Camera.main!.ScreenToWorldPoint(mousePos);
             Vector2 dir = ((Vector3)worldPos - transform.position).normalized;
             aimInput = dir;

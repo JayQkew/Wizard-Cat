@@ -15,6 +15,6 @@ public class Aim : MonoBehaviour
 
     private void Update()
     {
-        aimObject.transform.position = _inputHandler.aimInput * aimDistance;
+        aimObject.transform.localPosition = _inputHandler.aimInput * aimDistance;
     }
 }
