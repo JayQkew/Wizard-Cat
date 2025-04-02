@@ -7,14 +7,14 @@ public class Aim : MonoBehaviour
 
     [Header("Testing")]
     [SerializeField] private GameObject aimObject;
+
     [SerializeField] private float aimDistance = 1.5f;
-    private void Awake()
-    {
+
+    private void Awake() {
         _inputHandler = GetComponent<InputHandler>();
     }
 
-    private void Update()
-    {
+    private void Update() {
         aimObject.transform.localPosition = _inputHandler.aimInput * aimDistance;
     }
 }
