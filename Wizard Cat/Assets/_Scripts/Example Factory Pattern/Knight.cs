@@ -4,17 +4,17 @@ using UnityEngine;
 public class Knight : MonoBehaviour
 {
     [SerializeField] private EquipmentFactory _equipmentFactory;
-    [SerializeField] private WeaponFactory _weaponFactory;
-    [SerializeField] private ShieldFactrory _shieldFactory;
-    private IWeapon _weapon = IWeapon.CreateDefault();
+
+    private IWeapon _weapon;
+    private IShield _shield;
 
     private void Start() {
-        if (_weaponFactory != null) {
-            _weapon = _weaponFactory.CreateWeapon();
-        }
-
+        _weapon = _equipmentFactory?.CreateWeapon();
+        _shield = _equipmentFactory?.CreateShield();
         Attack();
+        Defend();
     }
 
-    public void Attack() => _weapon?.Attack();
+    private void Attack() => _weapon?.Attack();
+    private void Defend() => _shield?.Defend();
 }
