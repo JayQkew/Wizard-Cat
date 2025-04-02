@@ -349,7 +349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1765382307}
-  - component: {fileID: 1765382306}
+  - component: {fileID: 1765382308}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -357,19 +357,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1765382306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765382305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7af4e1982f799744bce727ba426e7a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponFactory: {fileID: 11400000, guid: 20dbe9afc30bbd4489c88638e82f5222, type: 2}
 --- !u!4 &1765382307
 Transform:
   m_ObjectHideFlags: 0
@@ -385,6 +372,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1765382308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765382305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7af4e1982f799744bce727ba426e7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipmentFactory: {fileID: 11400000, guid: fb01094659852b540b3719eb9242c0d9, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
